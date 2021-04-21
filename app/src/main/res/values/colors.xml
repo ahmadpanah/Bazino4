@@ -18,6 +18,8 @@
     <color name="shadow_color">#3c3c3c</color>
     <color name="color_white">#FFFFFF</color>
 
+    <color name="light_gray">#e8e8e8</color>
+
 
 
 </resources>
