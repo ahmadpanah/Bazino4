@@ -20,11 +20,12 @@ import com.google.firebase.firestore.QuerySnapshot;
 import java.util.ArrayList;
 
 import ir.shariaty.bazino4.databinding.ActivityMainBinding;
+import me.ibrahimsn.lib.OnItemSelectedListener;
 
 public class MainActivity extends AppCompatActivity {
 
     ActivityMainBinding binding;
-    FirebaseFirestore database;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -34,28 +35,27 @@ public class MainActivity extends AppCompatActivity {
 
         setSupportActionBar(binding.toolbar);
 
-        database = FirebaseFirestore.getInstance();
+        binding.bottomBar.setOnItemSelectedListener(new OnItemSelectedListener() {
+            @Override
+            public boolean onItemSelect(int i) {
+                switch (i) {
+                    case 0:
+                        Toast.makeText(MainActivity.this,"Home",Toast.LENGTH_SHORT).show();
+                        break;
+                    case 1:
+                        Toast.makeText(MainActivity.this,"Rank",Toast.LENGTH_SHORT).show();
+                        break;
+                    case 2:
+                        Toast.makeText(MainActivity.this,"Wallet",Toast.LENGTH_SHORT).show();
+                        break;
+                    case 3:
 
-        ArrayList<CategoryModel> categories = new ArrayList<>();
+                        break;
+                }
+                return false;
+            }
+        });
 
-       CategoryAdapter adapter = new CategoryAdapter(this,categories);
-
-       database.collection("categories")
-               .addSnapshotListener(new EventListener<QuerySnapshot>() {
-                   @Override
-                   public void onEvent(@Nullable QuerySnapshot value, @Nullable FirebaseFirestoreException error) {
-                      categories.clear();
-                       for (DocumentSnapshot snapshot : value.getDocuments()) {
-                           CategoryModel model = snapshot.toObject(CategoryModel.class);
-                           model.setCategoryId(snapshot.getId());
-                           categories.add(model);
-                       }
-                       adapter.notifyDataSetChanged();
-                   }
-               });
-
-       binding.categoryList.setLayoutManager(new GridLayoutManager(this,2));
-       binding.categoryList.setAdapter(adapter);
     }
 
     @Override
