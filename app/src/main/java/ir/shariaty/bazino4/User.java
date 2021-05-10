@@ -2,6 +2,7 @@ package ir.shariaty.bazino4;
 
 public class User {
     private String name, email, pass, referCode;
+    private long coins = 25;
 
     public User() {
     }
@@ -43,5 +44,13 @@ public class User {
 
     public void setReferCode(String referCode) {
         this.referCode = referCode;
+    }
+
+    public long getCoins() {
+        return coins;
+    }
+
+    public void setCoins(long coins) {
+        this.coins = coins;
     }
 }
