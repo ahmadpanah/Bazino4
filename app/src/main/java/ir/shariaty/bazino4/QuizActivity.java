@@ -46,42 +46,45 @@ public class QuizActivity extends AppCompatActivity {
         Random random = new Random();
         int rand = random.nextInt(12);
 
-        //Todo BugFix!
+        //Todo BugFix! => Bug Fixed!
         database.collection("categories")
                 .document(catId)
                 .collection("questions")
-                .whereLessThanOrEqualTo("index", rand)
+                .whereGreaterThanOrEqualTo("index", rand)
                 .orderBy("index")
                 .limit(5).get().addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
-                                                         @Override
-                                                         public void onSuccess(QuerySnapshot queryDocumentSnapshots) {
-                                                             if (queryDocumentSnapshots.getDocuments().size() < 5) {
-                                                                 database.collection("categories")
-                                                                         .document(catId)
-                                                                         .collection("questions")
-                                                                         .whereLessThanOrEqualTo("index", rand)
-                                                                         .orderBy("index")
-                                                                         .limit(5).get().addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
-                                                                     @Override
-                                                                     public void onSuccess(QuerySnapshot queryDocumentSnapshots) {
-                                                                             for (DocumentSnapshot snapshot : queryDocumentSnapshots) {
-                                                                                 Question question = snapshot.toObject(Question.class);
-                                                                                 questions.add(question);
-                                                                         }
-                                                                     }
-                                                                 });
-                                                             } else {
-                                                                 for (DocumentSnapshot snapshot : queryDocumentSnapshots) {
-                                                                     Question question = snapshot.toObject(Question.class);
-                                                                     questions.add(question);
-                                                                 }
-                                                             }
-                                                         }
-                                                     });
+            @Override
+            public void onSuccess(QuerySnapshot queryDocumentSnapshots) {
+                if(queryDocumentSnapshots.getDocuments().size() < 5) {
+                    database.collection("categories")
+                            .document(catId)
+                            .collection("questions")
+                            .whereLessThanOrEqualTo("index", rand)
+                            .orderBy("index")
+                            .limit(5).get().addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
+                        @Override
+                        public void onSuccess(QuerySnapshot queryDocumentSnapshots) {
+                            for(DocumentSnapshot snapshot : queryDocumentSnapshots) {
+                                Question question = snapshot.toObject(Question.class);
+                                questions.add(question);
+                            }
+                            setNextQuestion();
+                        }
+                    });
+                } else {
+                    for(DocumentSnapshot snapshot : queryDocumentSnapshots) {
+                        Question question = snapshot.toObject(Question.class);
+                        questions.add(question);
+                    }
+                    setNextQuestion();
+                }
+            }
+        });
+
 
 
         resetTimer();
-        setNextQuestion();
+
     }
 
     void resetTimer() {
