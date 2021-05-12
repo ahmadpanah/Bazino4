@@ -3,6 +3,8 @@ package ir.shariaty.bazino4;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.GridLayoutManager;
 
 import android.app.Activity;
@@ -35,21 +37,31 @@ public class MainActivity extends AppCompatActivity {
 
         setSupportActionBar(binding.toolbar);
 
+        FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
+        transaction.replace(R.id.content, new HomeFragment());
+        transaction.commit();
+
+
         binding.bottomBar.setOnItemSelectedListener(new OnItemSelectedListener() {
             @Override
             public boolean onItemSelect(int i) {
+                FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
                 switch (i) {
                     case 0:
-                        Toast.makeText(MainActivity.this,"Home",Toast.LENGTH_SHORT).show();
+                        transaction.replace(R.id.content, new HomeFragment());
+                        transaction.commit();
                         break;
                     case 1:
-                        Toast.makeText(MainActivity.this,"Rank",Toast.LENGTH_SHORT).show();
+                        transaction.replace(R.id.content, new LeaderboardsFragment());
+                        transaction.commit();
                         break;
                     case 2:
-                        Toast.makeText(MainActivity.this,"Wallet",Toast.LENGTH_SHORT).show();
+                        transaction.replace(R.id.content, new WalletFragment());
+                        transaction.commit();
                         break;
                     case 3:
-
+                        transaction.replace(R.id.content, new ProfileFragment());
+                        transaction.commit();
                         break;
                 }
                 return false;

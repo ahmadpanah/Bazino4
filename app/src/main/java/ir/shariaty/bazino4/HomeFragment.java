@@ -44,9 +44,11 @@ public class HomeFragment extends Fragment {
 
         binding = FragmentHomeBinding.inflate(inflater,container,false);
 
+        database = FirebaseFirestore.getInstance();
+
         ArrayList<CategoryModel> categories = new ArrayList<>();
 
-        CategoryAdapter adapter = new CategoryAdapter(getContext(),categories);
+        CategoryAdapter adapter = new CategoryAdapter(getContext(), categories);
 
         database.collection("categories")
                 .addSnapshotListener(new EventListener<QuerySnapshot>() {
