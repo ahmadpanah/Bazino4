@@ -46,45 +46,42 @@ public class QuizActivity extends AppCompatActivity {
         Random random = new Random();
         int rand = random.nextInt(12);
 
-        //Todo BugFix! => Bug Fixed!
+        //Todo BugFix!
         database.collection("categories")
                 .document(catId)
                 .collection("questions")
-                .whereGreaterThanOrEqualTo("index", rand)
+                .whereLessThanOrEqualTo("index", rand)
                 .orderBy("index")
                 .limit(5).get().addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
-            @Override
-            public void onSuccess(QuerySnapshot queryDocumentSnapshots) {
-                if(queryDocumentSnapshots.getDocuments().size() < 5) {
-                    database.collection("categories")
-                            .document(catId)
-                            .collection("questions")
-                            .whereLessThanOrEqualTo("index", rand)
-                            .orderBy("index")
-                            .limit(5).get().addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
-                        @Override
-                        public void onSuccess(QuerySnapshot queryDocumentSnapshots) {
-                            for(DocumentSnapshot snapshot : queryDocumentSnapshots) {
-                                Question question = snapshot.toObject(Question.class);
-                                questions.add(question);
-                            }
-                            setNextQuestion();
-                        }
-                    });
-                } else {
-                    for(DocumentSnapshot snapshot : queryDocumentSnapshots) {
-                        Question question = snapshot.toObject(Question.class);
-                        questions.add(question);
-                    }
-                    setNextQuestion();
-                }
-            }
-        });
-
+                                                         @Override
+                                                         public void onSuccess(QuerySnapshot queryDocumentSnapshots) {
+                                                             if (queryDocumentSnapshots.getDocuments().size() < 5) {
+                                                                 database.collection("categories")
+                                                                         .document(catId)
+                                                                         .collection("questions")
+                                                                         .whereLessThanOrEqualTo("index", rand)
+                                                                         .orderBy("index")
+                                                                         .limit(5).get().addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
+                                                                     @Override
+                                                                     public void onSuccess(QuerySnapshot queryDocumentSnapshots) {
+                                                                             for (DocumentSnapshot snapshot : queryDocumentSnapshots) {
+                                                                                 Question question = snapshot.toObject(Question.class);
+                                                                                 questions.add(question);
+                                                                         }
+                                                                     }
+                                                                 });
+                                                             } else {
+                                                                 for (DocumentSnapshot snapshot : queryDocumentSnapshots) {
+                                                                     Question question = snapshot.toObject(Question.class);
+                                                                     questions.add(question);
+                                                                 }
+                                                             }
+                                                         }
+                                                     });
 
 
         resetTimer();
-
+        setNextQuestion();
     }
 
     void resetTimer() {
