@@ -3,8 +3,6 @@ package ir.shariaty.bazino4;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.fragment.app.FragmentManager;
-import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.GridLayoutManager;
 
 import android.app.Activity;
@@ -28,6 +26,7 @@ public class MainActivity extends AppCompatActivity {
 
     ActivityMainBinding binding;
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -36,33 +35,21 @@ public class MainActivity extends AppCompatActivity {
 
         setSupportActionBar(binding.toolbar);
 
-        FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
-        transaction.replace(R.id.content, new HomeFragment());
-        transaction.commit();
-
         binding.bottomBar.setOnItemSelectedListener(new OnItemSelectedListener() {
             @Override
             public boolean onItemSelect(int i) {
-                FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
                 switch (i) {
                     case 0:
-                        transaction.replace(R.id.content, new HomeFragment());
-                        transaction.commit();
-//                        Toast.makeText(MainActivity.this,"Home",Toast.LENGTH_SHORT).show();
+                        Toast.makeText(MainActivity.this,"Home",Toast.LENGTH_SHORT).show();
                         break;
                     case 1:
-                        transaction.replace(R.id.content, new LeaderboardsFragment());
-                        transaction.commit();
-//                        Toast.makeText(MainActivity.this,"Rank",Toast.LENGTH_SHORT).show();
+                        Toast.makeText(MainActivity.this,"Rank",Toast.LENGTH_SHORT).show();
                         break;
                     case 2:
-                        transaction.replace(R.id.content, new WalletFragment());
-                        transaction.commit();
-//                        Toast.makeText(MainActivity.this,"Wallet",Toast.LENGTH_SHORT).show();
+                        Toast.makeText(MainActivity.this,"Wallet",Toast.LENGTH_SHORT).show();
                         break;
                     case 3:
-                        transaction.replace(R.id.content, new ProfileFragment());
-                        transaction.commit();
+
                         break;
                 }
                 return false;
