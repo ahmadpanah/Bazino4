@@ -45,7 +45,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:fontFamily="sans-serif-black"
-        android:text="0"
+        android:text="18000"
         android:textColor="@color/color_white"
         android:textSize="36sp"
         app:layout_constraintEnd_toEndOf="@+id/textView11"
