@@ -1,5 +1,6 @@
 package ir.shariaty.bazino4;
 
+import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.annotation.Nullable;
@@ -66,6 +67,13 @@ public class HomeFragment extends Fragment {
 
         binding.categoryList.setLayoutManager(new GridLayoutManager(getContext(),2));
         binding.categoryList.setAdapter(adapter);
+
+        binding.spinnerWheel.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(getContext(), SpinnerActivity.class));
+            }
+        });
         // Inflate the layout for this fragment
         return binding.getRoot();
     }
