@@ -3,6 +3,7 @@ package ir.shariaty.bazino4;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.app.DownloadManager;
+import android.content.Intent;
 import android.os.Bundle;
 import android.os.CountDownTimer;
 import android.view.View;
@@ -30,6 +31,7 @@ public class QuizActivity extends AppCompatActivity {
     Question question;
     CountDownTimer timer;
     FirebaseFirestore database;
+    int correctAnswers = 0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -128,6 +130,7 @@ public class QuizActivity extends AppCompatActivity {
     void checkAnswer (TextView textView) {
         String selectedAnswer = textView.getText().toString();
         if (selectedAnswer.equals(question.getAnswer())) {
+            correctAnswers++;
             textView.setBackground(getResources().getDrawable(R.drawable.option_right));
         } else {
             showAnswer();
@@ -155,11 +158,15 @@ public class QuizActivity extends AppCompatActivity {
                 break;
             case R.id.nextBtn:
                 reset();
-                if (index < questions.size()) {
+                if (index <= questions.size()) {
                     index++;
                     setNextQuestion();
                 } else {
-                    Toast.makeText(this,"Quiz Finished!", Toast.LENGTH_SHORT).show();
+                    Intent intent = new Intent(QuizActivity.this, ResultActivity.class);
+                    intent.putExtra("correct", correctAnswers);
+                    intent.putExtra("total", questions.size());
+                    startActivity(intent);
+//                    Toast.makeText(this,"Quiz Finished!", Toast.LENGTH_SHORT).show();
                 }
                 break;
         }
